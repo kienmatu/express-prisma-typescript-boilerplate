@@ -1,0 +1,18 @@
+services:
+  postgres:
+    image: postgres
+    container_name: postgres_db_container
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB:-postgres}
+      - POSTGRES_USER=${POSTGRES_USER:-postgres}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-password1}
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+  api:
+    container_name: boiler_api_container
+    build: .
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
